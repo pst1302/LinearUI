@@ -23,6 +23,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 public class MainActivity extends Activity implements OnClickListener, OnTouchListener{
 
 	private LinearLayout dynamicLayout;
@@ -33,7 +35,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	private int id = 0 ;
 	back[] task = new back[100];
 	Bitmap[] imgBitmap = new Bitmap[100];
-	ImageView[] iv = new ImageView[100];
+	ImageView iv;
 	int screenWidth;
 	int screenHeight;
 	int lastPoint = 0;
@@ -55,7 +57,22 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 		screenWidth = metrics.widthPixels;
 		screenHeight = metrics.heightPixels;
 		
-		drawer(sv.getScrollY());
+		ImageLoader imageLoader = ImageLoader.getInstance();
+		ImageView iv = new ImageView(this);
+		
+		imageLoader.displayImage("http://media-cdn.tripadvisor.com/media/photo-s/03/9b/2d/f2/new-york-city.jpg", iv);
+		
+		LayoutInflater inflater =  (LayoutInflater) getSystemService(this.LAYOUT_INFLATER_SERVICE);
+		
+		LinearLayout ll = (LinearLayout)inflater.inflate(R.layout.added, null, false);
+				
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+		
+		ll.setLayoutParams(params);
+
+		ll.addView(iv);
+		
+		
 	}
 	
 	@Override
@@ -68,45 +85,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
 		//Log.i("test", Integer.toString(v.getScrollY()));
-		drawer(sv.getScrollY());
 		return false;
-	}
-	
-	public void drawer(int currentPoint) {
-		for(int i = currentPoint ; i < currentPoint + 20 ; i++) {
-			
-			task[i] = new back();
-			iv[i] = new ImageView(this);
-			
-			task[i].executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"http://media-cdn.tripadvisor.com/media/photo-s/03/9b/2d/f2/new-york-city.jpg",iv[i]);
-			
-			lastPoint += (screenHeight/10);
-			Log.i("lastPoint", Integer.toString(lastPoint));
-			float lastValue = sv.getScaleY() + (screenHeight * 2);
-			Log.i("sv.getScaleY() + (screenHeight * 2)", Float.toString(lastValue));
-		}
-	}
-	
-	
-	public void pushBtn(ImageView iv) {
-		
-		// Inflater 생성 후 Inflater로 LinearLayout 생성 
-		LayoutInflater inflater = (LayoutInflater)getSystemService(this.LAYOUT_INFLATER_SERVICE);
-		LinearLayout ll = (LinearLayout)inflater.inflate(R.layout.added, null, false);
-		
-		// 레이아웃 속성 정의
-		LayoutParams profleParams = new LayoutParams(screenWidth/4,screenHeight/10);
-		
-		// 이미지 뷰와 속성 연결
-		iv.setLayoutParams(profleParams);
-		
-		// 레이아웃에 이미지 추가
-		ll.addView(iv);
-
-		ll.setOrientation(LinearLayout.HORIZONTAL);
-		
-		
-		dynamicLayout.addView(ll,new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
 	}
 	
 	private class back extends AsyncTask<Object,Integer,ImageView> {
@@ -140,7 +119,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 		
 		@Override
 		protected void onPostExecute(ImageView iv) {
-			pushBtn(iv);
+			
 		}
 		
 	}
