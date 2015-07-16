@@ -33,7 +33,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	ScrollView sv;
 	Bitmap bitmap = null;
 	private int id = 0 ;
-	back[] task = new back[100];
+	//back[] task = new back[100];
 	Bitmap[] imgBitmap = new Bitmap[100];
 	ImageView iv;
 	int screenWidth;
@@ -88,7 +88,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 		return false;
 	}
 	
-	private class back extends AsyncTask<Object,Integer,ImageView> {
+	/*private class back extends AsyncTask<Object,Integer,ImageView> {
 
 		@Override
 		protected ImageView doInBackground(Object ...urls) {
@@ -122,6 +122,6 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 			
 		}
 		
-	}
+	}*/
 	
 }
