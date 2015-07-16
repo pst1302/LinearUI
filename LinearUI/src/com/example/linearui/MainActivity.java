@@ -128,7 +128,6 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 				bitmap = BitmapFactory.decodeStream(is);
 				
 				conn.disconnect();
-				// º¯°æ
 				
 				((ImageView)urls[1]).setImageBitmap(bitmap);
 				
