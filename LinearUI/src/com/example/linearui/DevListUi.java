@@ -1,5 +1,6 @@
 package com.example.linearui;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
@@ -52,14 +53,21 @@ public class DevListUi {
 	// 이미지 로더 configuration 초기화하고 적용
 	private void initUiConfiguration() {
 		
+		// DisplayImageOption 설정
+		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+				.cacheInMemory(true)	// 메모리 캐시 사용
+				.cacheOnDisc(true)		// 디스크 캐시 사용
+				.build();
+		
 		// ImageLoader 환경 설정
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
 				.threadPriority(Thread.NORM_PRIORITY - 2)
 				.denyCacheImageMultipleSizesInMemory()
+				.defaultDisplayImageOptions(defaultOptions)
 				.tasksProcessingOrder(QueueProcessingType.LIFO)
 				.writeDebugLogs()
 				.build();
-		
+				
 		// 환경 설정 저장하고 초기화
 		ImageLoader.getInstance().init(config);
 	}
@@ -76,6 +84,7 @@ public class DevListUi {
 	public void inputImageByUrl(String url) {
 		
 		imageLoader.displayImage(url, ivs[imageViewCounter]);
+		
 		
 		LayoutParams viewParams = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.MATCH_PARENT);
 		ivs[imageViewCounter].setLayoutParams(viewParams);		
