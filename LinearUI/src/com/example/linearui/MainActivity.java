@@ -18,10 +18,9 @@ public class MainActivity extends Activity {
 		DevListUi devUi = new DevListUi(this);
 		
 		for(int i = 0; i < 100; i++) {
-			devUi.inputImageByUrl("http://placehold.it/120x120&text=image" + (i+1));
+			devUi.inputProfile("drawable://" + R.drawable.bok,"�̱溹","hi!!!!");
 		}
 		
 		dynamicLayout.addView(devUi.getLayout());
-		
 	}
 }
